@@ -1,5 +1,5 @@
 {% set name = "uuid6" %}
-{% set version = "2024.1.12" %}
+{% set version = "2024.7.10" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/uuid6-{{ version }}.tar.gz
-  sha256: ed0afb3a973057575f9883201baefe402787ca5e11e1d24e377190f0c43f1993
+  sha256: 2d29d7f63f593caaeea0e0d0dd0ad8129c9c663b29e19bdf882e864bedf18fb0
 
 build:
   noarch: python
