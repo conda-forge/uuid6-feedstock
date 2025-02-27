@@ -11,6 +11,9 @@ source:
 
 build:
   noarch: python
+  script_env:
+    # this is what determines the version in setup.py
+    - GITHUB_REF=refs/tags/{{ version }}
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
   number: 1
 
@@ -18,7 +21,6 @@ requirements:
   host:
     - python {{ python_min }}
     - setuptools
-    - wheel
     - pip
   run:
     - python >={{ python_min }}
@@ -28,6 +30,8 @@ test:
     - uuid6
   commands:
     - pip check
+    # make sure the version reported by pip is correct
+    - "pip show {{ name }} | grep -Fx 'Version: {{ version }}'"
   requires:
     - pip
     - python {{ python_min }}
