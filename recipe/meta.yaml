@@ -6,30 +6,35 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/uuid6-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/uuid6-{{ version }}.tar.gz
   sha256: 2d29d7f63f593caaeea0e0d0dd0ad8129c9c663b29e19bdf882e864bedf18fb0
 
 build:
   noarch: python
-  script: {{ PYTHON }} -m pip install . -vv
-  number: 0
+  script_env:
+    # this is what determines the version in setup.py
+    - GITHUB_REF=refs/tags/{{ version }}
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 1
 
 requirements:
   host:
-    - python >=3.8
+    - python {{ python_min }}
     - setuptools
-    - wheel
     - pip
   run:
-    - python >=3.8
+    - python >={{ python_min }}
 
 test:
   imports:
     - uuid6
   commands:
     - pip check
+    # make sure the version reported by pip is correct
+    - "pip show {{ name }} | grep -Fx 'Version: {{ version }}'"
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/oittaa/uuid6-python
@@ -40,3 +45,4 @@ about:
 extra:
   recipe-maintainers:
     - deepsihag
+    - xylar

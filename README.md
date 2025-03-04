@@ -144,4 +144,5 @@ Feedstock Maintainers
 =====================
 
 * [@deepsihag](https://github.com/deepsihag/)
+* [@xylar](https://github.com/xylar/)
 
